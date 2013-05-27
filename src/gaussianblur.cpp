@@ -1,5 +1,4 @@
 #include "gaussianblur.h"
-#include <QDebug>
 
 double GaussianBlur::GetNumberOnNormalDistribution(int i, int j, const int center, double sigma) const {
     return (1.0 / (2 * M_PI * pow(sigma, 2)) * exp ( - (pow(i - center, 2) + pow(j - center, 2)) / (2 * pow(sigma, 2))));
@@ -112,16 +111,10 @@ QImage GaussianBlur::ApplyGaussianFilterToImage(const QImage input) {
         for (int i = 0; i < size_; i++)
             temp[i] = new QRgb [size_];
 
-        QProgressDialog progress("Обработка изображения...", "", 0, output.width() * output.height());
-        progress.setMinimumDuration(0);
-        progress.setWindowTitle("Пожалуйста, подождите...");
-        progress.exec();
-        int pixel_count = 0;
         for (int i = 0; i < output.width(); i++)
             for (int j = 0; j < output.height(); j++) {
                 temp = GetPixelMatrix(QPoint(i, j), output);
                 output.setPixel(QPoint(i,j), GetNewPixelValue(temp));
-                progress.setValue(++pixel_count);
             }
 
         for (int i = 0; i < size_; i++)
