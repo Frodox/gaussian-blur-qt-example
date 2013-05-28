@@ -15,18 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
            jpegfilter.cpp \
     settingsdialog.cpp \
-    gaussianblur.cpp \
-    progressbar.cpp
+    gaussianblur.cpp
 
 HEADERS  += \
     settingsdialog.h \
     gaussianblur.h \
-    jpegfilter.h \
-    progressbar.h
+    jpegfilter.h
 
 FORMS    += jpegfilter.ui \
-    settingsdialog.ui \
-    progressbar.ui
+    settingsdialog.ui
 
 RESOURCES += \
     res/res.qrc

@@ -5,15 +5,11 @@ double GaussianBlur::GetNumberOnNormalDistribution(int i, int j, const int cente
 }
 
 
-QRgb** GaussianBlur::GetPixelMatrix(const QPoint center, const QImage image)  {
+void GaussianBlur::GetPixelMatrix(const QPoint &center, const QImage &image, QRgb** matrix)  {
     QSize image_size = image.size();
-    QRgb **result = new QRgb* [size_];
-    for (int i = 0; i < size_; i++)
-        result[i] = new QRgb [size_];
     for (int i = 0; i < size_; i++)
         for (int j = 0; j < size_; j++)
-            result[i][j] = image.pixel(GetCoordinate(QPoint(i, j) + center, image_size));
-    return result;
+            matrix[i][j] = image.pixel(GetCoordinate(QPoint(i, j) + center, image_size));
 }
 
 
@@ -33,7 +29,7 @@ QRgb GaussianBlur::GetNewPixelValue(QRgb **matrix) {
 }
 
 
-QPoint GaussianBlur::GetCoordinate(const QPoint point, const QSize image_size) {
+QPoint GaussianBlur::GetCoordinate(const QPoint &point, const QSize &image_size) {
     QPoint result(point);
     result.setX(result.x() - radius_);
     result.setY(result.y() - radius_);
@@ -60,7 +56,7 @@ void GaussianBlur::NormilizeElementsBySum() {
 GaussianBlur::GaussianBlur(int radius, double sigma) :
     radius_ (radius),
     diviation_ (sigma),
-    values_is_set_ (false){
+    values_is_set_ (false) {
     if (true == (radius_ % 2)) {
         size_ = 2 * radius_ + 1;
         matrix_ = new double* [size_];
@@ -113,7 +109,7 @@ QImage GaussianBlur::ApplyGaussianFilterToImage(const QImage input) {
 
         for (int i = 0; i < output.width(); i++)
             for (int j = 0; j < output.height(); j++) {
-                temp = GetPixelMatrix(QPoint(i, j), output);
+                GetPixelMatrix(QPoint(i, j), output, temp);
                 output.setPixel(QPoint(i,j), GetNewPixelValue(temp));
             }
 

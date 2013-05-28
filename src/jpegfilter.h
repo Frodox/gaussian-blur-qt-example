@@ -24,8 +24,12 @@ private:
 public:
     explicit JpegFilter(QWidget *parent = 0);
     ~JpegFilter();
+private:
     void SetFileNameOnTittle(const QString &file_name);
     void SetInputImage(const QString &file_name);
+    void UpdateButtons();
+    bool SaveAs();
+    bool Save(const QString &file_name);
 
 private slots:
     void on_action_open_triggered();

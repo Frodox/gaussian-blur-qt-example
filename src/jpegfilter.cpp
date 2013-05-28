@@ -1,7 +1,7 @@
 #include "jpegfilter.h"
 #include "ui_jpegfilter.h"
 
-#include <QDebug>
+#include "QDebug"
 
 JpegFilter::JpegFilter(QWidget *parent) :
     QMainWindow(parent),
@@ -21,6 +21,43 @@ void JpegFilter::SetFileNameOnTittle(const QString &file_name) {
 }
 
 
+
+
+void JpegFilter::SetInputImage(const QString &file_name) {
+    input_image_.load(file_name);
+    ui_ -> image_input_ -> setPixmap(QPixmap::fromImage(input_image_.scaled(input_image_.size() / 1.5)));
+}
+
+
+void JpegFilter::UpdateButtons() {
+    bool input_is_loaded = ui_ -> image_input_ -> pixmap() -> isNull();
+    bool output_is_set = ui_ -> image_output_ -> pixmap();
+    if (false == input_is_loaded)
+       ui_ -> action_blur_image -> setEnabled(true);
+    ui_ -> action_save -> setEnabled(output_is_set);
+    ui_ -> action_save_as -> setEnabled(output_is_set);
+}
+
+
+bool JpegFilter::SaveAs() {
+    QString file_name = QFileDialog::getSaveFileName(this,
+                                                     "Сохранить изображение",
+                                                     QDir::currentPath(),
+                                                     "Изображения (*.jpg *jpeg *.jpe)");
+    if (true == file_name.isEmpty())
+        return false;
+    return Save(file_name);
+}
+
+
+bool JpegFilter::Save(const QString &file_name) {
+    QImage output = ui_ -> image_output_ -> pixmap() -> toImage();
+    output.save(file_name, "jpeg");
+    ui_ -> status_bar_ -> showMessage(QString("Сохранено в %1").arg(file_name), 10);
+    return true;
+}
+
+
 void JpegFilter::on_action_open_triggered() {
     QString file_name = QFileDialog::getOpenFileName(this,
                                                      "Открыть изображение",
@@ -32,23 +69,22 @@ void JpegFilter::on_action_open_triggered() {
     else {
         SetFileNameOnTittle(file_name);
         SetInputImage(file_name);
+        ui_ -> image_output_ -> clear();
+        UpdateButtons();
     }
 }
 
 
-void JpegFilter::SetInputImage(const QString &file_name) {
-    input_image_.load(file_name);
-    ui_ -> image_input_ -> setPixmap(QPixmap::fromImage(input_image_.scaled(input_image_.size() / 1.5)));
-}
-
-
 void JpegFilter::on_action_save_triggered() {
-
+    QString file_name = windowTitle();
+    file_name.remove(file_name.lastIndexOf("/") + 1, file_name.length());
+    file_name + "output.jpeg";
+    Save(file_name);
 }
 
 
 void JpegFilter::on_action_save_as_triggered() {
-
+    SaveAs();
 }
 
 
@@ -70,8 +106,10 @@ void JpegFilter::on_action_blur_image_triggered() {
     }
 
     GaussianBlur blur(radius_, diviation_);
-
+    ui_ -> status_bar_ -> showMessage("Подождите, изображение обрабатывается...");
     QImage output = blur.ApplyGaussianFilterToImage(input_image_);
+    ui_ -> status_bar_ -> clearMessage();
     ui_ -> image_output_ -> setPixmap(QPixmap::fromImage(output.scaled(output.size() / 1.5)));
+    UpdateButtons();
 }
 
