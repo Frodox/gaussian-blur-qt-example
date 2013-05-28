@@ -1,7 +1,6 @@
 #include "jpegfilter.h"
 #include "ui_jpegfilter.h"
 
-#include "QDebug"
 
 JpegFilter::JpegFilter(QWidget *parent) :
     QMainWindow(parent),

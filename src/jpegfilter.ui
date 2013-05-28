@@ -82,8 +82,8 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_open"/>
-   <addaction name="action_save"/>
    <addaction name="action_settings"/>
+   <addaction name="action_save"/>
    <addaction name="action_blur_image"/>
   </widget>
   <widget class="QStatusBar" name="status_bar_"/>
