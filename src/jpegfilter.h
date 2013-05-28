@@ -16,6 +16,7 @@ class JpegFilter : public QMainWindow
 
 private:
     QImage input_image_;
+    QImage output_image_;
     int radius_;
     double diviation_;
     bool blur_parametres_is_set_;

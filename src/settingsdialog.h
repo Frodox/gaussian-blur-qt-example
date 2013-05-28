@@ -16,6 +16,8 @@ public:
     ~SettingsDialog();
     int GetBlurRadius() const;
     double GetDiviation() const;
+    void SetBlurRadius(int radius);
+    void SetDiviation(double diviation);
 private:
     Ui::SettingsDialog *ui_;
 };

@@ -36,14 +36,14 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLabel" name="image_input_">
+     <widget class="QLabel" name="label_input_">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLabel" name="image_output_">
+     <widget class="QLabel" name="label_output_">
       <property name="text">
        <string/>
       </property>
