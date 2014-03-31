@@ -1,4 +1,5 @@
 #include <QMessageBox>
+#include <QDebug>
 
 #include "jpegfilter.h"
 #include "ui_jpegfilter.h"
@@ -89,6 +90,8 @@ QSize JpegFilter::scale_size_if_lesser(QSize size, int max_size)
     return size;
 }
 
+
+
 /********************* T R I G G E R S ***************************************/
 
 void JpegFilter::on_action_open_triggered()
@@ -107,7 +110,7 @@ void JpegFilter::on_action_open_triggered()
         SetFileNameOnTitle(file_path);
         SetInputImage(file_path);
         ui_ -> label_text ->setText(tr("До обработки:"));
-        this->blur_parametres_is_set_ = false;
+        // this->blur_parametres_is_set_ = false;
         UpdateButtons();
     }
 }
@@ -132,8 +135,8 @@ void JpegFilter::on_action_settings_triggered()
 {
     SettingsDialog settings_dialog(this);
 
-    settings_dialog.SetBlurRadius(radius_);
-    settings_dialog.SetDiviation(diviation_);
+    settings_dialog.SetBlurRadius(this->radius_);
+    settings_dialog.SetDiviation(this->diviation_);
     settings_dialog.exec();
 
     this->radius_ = settings_dialog.GetBlurRadius();

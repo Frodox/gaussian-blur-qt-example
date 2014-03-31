@@ -14,7 +14,9 @@
    <string>Настройки</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="preferences-desktop-wallpaper"/>
+   <iconset theme="preferences-desktop-wallpaper">
+    <normaloff/>
+   </iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedKingdom"/>
@@ -74,6 +76,9 @@
       </item>
       <item row="1" column="1">
        <widget class="QSpinBox" name="size_box_">
+        <property name="keyboardTracking">
+         <bool>false</bool>
+        </property>
         <property name="minimum">
          <number>3</number>
         </property>
@@ -82,9 +87,6 @@
         </property>
         <property name="singleStep">
          <number>2</number>
-        </property>
-        <property name="value">
-         <number>3</number>
         </property>
        </widget>
       </item>

@@ -21,35 +21,41 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
-     <widget class="QLabel" name="label_text">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Выберите изображение</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignHCenter|Qt::AlignTop</set>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLabel" name="label_output_">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_input_">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label_text">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Выберите изображение</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignHCenter|Qt::AlignTop</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_input_">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -84,7 +90,9 @@
   </widget>
   <action name="action_open">
    <property name="icon">
-    <iconset theme="folder-open"/>
+    <iconset theme="folder-open">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Открыть</string>
@@ -98,7 +106,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="document-save"/>
+    <iconset theme="document-save">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Сохранить</string>
@@ -112,7 +122,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="document-save-as"/>
+    <iconset theme="document-save-as">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Сохранить как</string>
@@ -123,7 +135,9 @@
   </action>
   <action name="action_settings">
    <property name="icon">
-    <iconset theme="preferences-desktop-wallpaper"/>
+    <iconset theme="preferences-desktop-wallpaper">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Настройки размытия</string>
@@ -137,7 +151,9 @@
   </action>
   <action name="action_exit">
    <property name="icon">
-    <iconset theme="application-exit"/>
+    <iconset theme="application-exit">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Выход</string>
@@ -151,7 +167,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="media-playback-start"/>
+    <iconset theme="media-playback-start">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Размыть изображение</string>
