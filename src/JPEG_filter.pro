@@ -19,5 +19,4 @@ HEADERS  += \
 FORMS    += jpegfilter.ui \
     settingsdialog.ui
 
-RESOURCES += \
-    res/res.qrc
+RESOURCES +=

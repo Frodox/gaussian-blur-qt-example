@@ -14,9 +14,21 @@
    <string>JpegFilter</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QLabel" name="label_before_">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
        <string>До обработки:</string>
       </property>
@@ -57,7 +69,7 @@
      <x>0</x>
      <y>0</y>
      <width>617</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_">
@@ -67,33 +79,29 @@
     <addaction name="action_open"/>
     <addaction name="action_save"/>
     <addaction name="action_save_as"/>
+    <addaction name="separator"/>
     <addaction name="action_exit"/>
    </widget>
+   <widget class="QMenu" name="menu_edit">
+    <property name="title">
+     <string>Правка</string>
+    </property>
+    <addaction name="action_blur_image"/>
+    <addaction name="action_settings"/>
+   </widget>
    <addaction name="menu_"/>
-  </widget>
-  <widget class="QToolBar" name="tool_bar_">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="action_open"/>
-   <addaction name="action_settings"/>
-   <addaction name="action_save"/>
-   <addaction name="action_blur_image"/>
+   <addaction name="menu_edit"/>
   </widget>
   <widget class="QStatusBar" name="status_bar_"/>
   <action name="action_open">
    <property name="icon">
-    <iconset resource="res/res.qrc">
-     <normaloff>:/Open_32x32.png</normaloff>:/Open_32x32.png</iconset>
+    <iconset theme="folder-open"/>
    </property>
    <property name="text">
     <string>Открыть</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="action_save">
@@ -101,11 +109,13 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="res/res.qrc">
-     <normaloff>:/Save_32x32.png</normaloff>:/Save_32x32.png</iconset>
+    <iconset theme="document-save"/>
    </property>
    <property name="text">
     <string>Сохранить</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="action_save_as">
@@ -113,28 +123,38 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="res/res.qrc">
-     <normaloff>:/Save_32x32.png</normaloff>:/Save_32x32.png</iconset>
+    <iconset theme="document-save-as"/>
    </property>
    <property name="text">
     <string>Сохранить как</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="action_settings">
    <property name="icon">
-    <iconset resource="res/res.qrc">
-     <normaloff>:/Settings_32x32.png</normaloff>:/Settings_32x32.png</iconset>
+    <iconset theme="preferences-desktop-wallpaper"/>
    </property>
    <property name="text">
     <string>Настройки</string>
    </property>
    <property name="toolTip">
-    <string>Настройки</string>
+    <string>Настройки размытия</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="action_exit">
+   <property name="icon">
+    <iconset theme="application-exit"/>
+   </property>
    <property name="text">
     <string>Выход</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="action_blur_image">
@@ -142,18 +162,18 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="res/res.qrc">
-     <normaloff>:/Picture_32x32.png</normaloff>:/Picture_32x32.png</iconset>
+    <iconset theme="media-playback-start"/>
    </property>
    <property name="text">
     <string>Размыть изображение</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="res/res.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>action_exit</sender>
