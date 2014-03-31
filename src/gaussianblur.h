@@ -1,18 +1,18 @@
 #ifndef GAUSSIANBLUR_H
 #define GAUSSIANBLUR_H
 
-#include <qmath.h>
 #include <QTextStream>
 #include <QImage>
+#include <qmath.h>
 
 class GaussianBlur
 {
 private:
     int radius_;
     int size_;
+    bool values_is_set_;
     double diviation_;
     double **matrix_;
-    bool values_is_set_;
 
 private:
     double GetNumberOnNormalDistribution(int x, int y, const int center, double sigma) const;
@@ -28,6 +28,7 @@ public:
 
     double GetSumElements() const;
     QImage ApplyGaussianFilterToImage(const QImage input);
+
     const GaussianBlur &operator = (const GaussianBlur &blur);
     friend QTextStream &operator << (QTextStream &stream, const GaussianBlur &blur);
 

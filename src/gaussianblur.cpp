@@ -1,11 +1,13 @@
 #include "gaussianblur.h"
 
-double GaussianBlur::GetNumberOnNormalDistribution(int i, int j, const int center, double sigma) const {
+double GaussianBlur::GetNumberOnNormalDistribution(int i, int j, const int center, double sigma) const
+{
     return (1.0 / (2 * M_PI * pow(sigma, 2)) * exp ( - (pow(i - center, 2) + pow(j - center, 2)) / (2 * pow(sigma, 2))));
 }
 
 
-void GaussianBlur::GetPixelMatrix(const QPoint &center, const QImage &image, QRgb** matrix)  {
+void GaussianBlur::GetPixelMatrix(const QPoint &center, const QImage &image, QRgb** matrix)
+{
     QSize image_size = image.size();
     for (int i = 0; i < size_; i++)
         for (int j = 0; j < size_; j++)
@@ -13,7 +15,8 @@ void GaussianBlur::GetPixelMatrix(const QPoint &center, const QImage &image, QRg
 }
 
 
-QRgb GaussianBlur::GetNewPixelValue(QRgb **matrix) {
+QRgb GaussianBlur::GetNewPixelValue(QRgb **matrix)
+{
     QRgb result = 0;
     double red = 0;
     double blue = 0;
@@ -54,11 +57,13 @@ void GaussianBlur::NormilizeElementsBySum() {
 
 
 GaussianBlur::GaussianBlur(int radius, double sigma) :
-    radius_ (radius),
-    diviation_ (sigma),
-    values_is_set_ (false) {
-    if (true == (radius_ % 2)) {
-        size_ = 2 * radius_ + 1;
+            radius_ (radius),
+            diviation_ (sigma),
+            values_is_set_ (false)
+{
+    if (true == (radius_ % 2))
+    {
+        size_   = 2 * radius_ + 1;
         matrix_ = new double* [size_];
         for (int i = 0; i < size_; i++)
             matrix_[i] = new double [size_];
@@ -72,10 +77,12 @@ GaussianBlur::GaussianBlur(int radius, double sigma) :
 
 
 GaussianBlur::GaussianBlur(const GaussianBlur &original):
-    radius_(original.radius_),
-    diviation_(original.diviation_) {
+            radius_(original.radius_),
+            diviation_(original.diviation_)
+{
     size_ = 2 * radius_ + 1;
     matrix_ = new double* [size_];
+
     for (int i = 0; i < size_; i++)
         matrix_[i] = new double [size_];
     for (int i = 0; i < size_; i++)
@@ -84,31 +91,39 @@ GaussianBlur::GaussianBlur(const GaussianBlur &original):
 }
 
 
-GaussianBlur::~GaussianBlur() {
+GaussianBlur::~GaussianBlur()
+{
     for (int i = 0; i < size_; i++)
         delete[] matrix_[i];
+
     delete[] matrix_;
 }
 
 
-double GaussianBlur::GetSumElements() const {
+double GaussianBlur::GetSumElements() const
+{
     double result = 0;
+
     for (int i = 0; i < size_; i++)
         for (int j = 0; j < size_; j++)
             result += matrix_[i][j];
+
     return result;
 }
 
 
-QImage GaussianBlur::ApplyGaussianFilterToImage(const QImage input) {
-    if (true == values_is_set_) {
+QImage GaussianBlur::ApplyGaussianFilterToImage(const QImage input)
+{
+    if (true == values_is_set_)
+    {
         QImage output(input);
         QRgb **temp = new QRgb* [size_];
         for (int i = 0; i < size_; i++)
             temp[i] = new QRgb [size_];
 
         for (int i = 0; i < output.width(); i++)
-            for (int j = 0; j < output.height(); j++) {
+            for (int j = 0; j < output.height(); j++)
+            {
                 GetPixelMatrix(QPoint(i, j), output, temp);
                 output.setPixel(QPoint(i,j), GetNewPixelValue(temp));
             }
@@ -123,15 +138,19 @@ QImage GaussianBlur::ApplyGaussianFilterToImage(const QImage input) {
 }
 
 
-const GaussianBlur& GaussianBlur::operator = (const GaussianBlur &blur) {
-    if (this != &blur) {
+const GaussianBlur& GaussianBlur::operator = (const GaussianBlur &blur)
+{
+    if (this != &blur)
+    {
         for (int i = 0; i < size_; i ++)
             delete[] matrix_[i];
         delete[] matrix_;
+
         radius_ = blur.radius_;
         diviation_ = blur.diviation_;
         size_ = blur.size_;
         matrix_ = new double* [size_];
+
         for (int i = 0; i < size_; i++)
             matrix_[i] = new double [size_];
         for (int i = 0; i < size_; i++)
