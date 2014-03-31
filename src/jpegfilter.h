@@ -3,8 +3,9 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
-#include <settingsdialog.h>
-#include <gaussianblur.h>
+
+#include "settingsdialog.h"
+#include "gaussianblur.h"
 
 namespace Ui {
 class JpegFilter;
@@ -17,20 +18,23 @@ class JpegFilter : public QMainWindow
 private:
     QImage input_image_;
     QImage output_image_;
+
     int radius_;
     double diviation_;
     bool blur_parametres_is_set_;
+
     Ui::JpegFilter *ui_;
 
 public:
     explicit JpegFilter(QWidget *parent = 0);
     ~JpegFilter();
+
 private:
-    void SetFileNameOnTittle(const QString &file_name);
+    void SetFileNameOnTitle(const QString &file_name);
     void SetInputImage(const QString &file_name);
     void UpdateButtons();
-    bool SaveAs();
     bool Save(const QString &file_name);
+    bool SaveAs();
 
 private slots:
     void on_action_open_triggered();
