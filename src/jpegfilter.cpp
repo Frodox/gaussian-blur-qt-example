@@ -1,3 +1,5 @@
+#include <QMessageBox>
+
 #include "jpegfilter.h"
 #include "ui_jpegfilter.h"
 
@@ -7,8 +9,9 @@ JpegFilter::JpegFilter(QWidget *parent) :
         ui_ (new Ui::JpegFilter)
 {
     ui_->setupUi(this);
-    radius_ = 3; // default value
-    diviation_ = 1.0; // default value
+    // default values
+    radius_ = 3;
+    diviation_ = 1.0;
     blur_parametres_is_set_ = false;
     have_img_to_save = false;
 }
@@ -146,7 +149,12 @@ void JpegFilter::on_action_blur_image_triggered()
         this->on_action_settings_triggered();
     }
 
-    // SHOW WARNING
+    QMessageBox::information(this, tr("Сейчас я как всё размою..."),
+                    tr("Я хотел бы предупредить,\n"
+                    "что процесс размытия по гаусу займёт некоторое время.\n"
+                    "Можете выпить чаю и съесть печеньку."),
+                    QMessageBox::Ok
+                    );
 
     GaussianBlur blur(radius_, diviation_);
     output_image_ = blur.ApplyGaussianFilterToImage(input_image_);
@@ -154,7 +162,11 @@ void JpegFilter::on_action_blur_image_triggered()
     QSize scaled_size = this->scale_size_if_lesser(input_image_.size(), 700);
     QImage output = output_image_.scaled(scaled_size, Qt::KeepAspectRatio);
 
-    // SHOW SUCCESS
+    QMessageBox::information(this, tr("Готово!"),
+                    tr("Спасибо что были с нами.\n"
+                    "Результат готов и появится после закрытия этого окошка."),
+                    QMessageBox::Ok
+                    );
 
     ui_ -> label_text ->setText(tr("После обработки:"));
     ui_ -> label_input_ -> setPixmap(QPixmap::fromImage(output));
@@ -162,4 +174,3 @@ void JpegFilter::on_action_blur_image_triggered()
 
     UpdateButtons();
 }
-
