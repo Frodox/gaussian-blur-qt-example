@@ -10,8 +10,8 @@ class GaussianBlur
 private:
     int radius_;
     int size_;
-    bool values_is_set_;
     double diviation_;
+    bool values_is_set_;
     double **matrix_;
 
 private:
