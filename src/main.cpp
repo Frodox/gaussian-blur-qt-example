@@ -1,4 +1,6 @@
-/* TODO: Documentation, licanse
+/* Simple photo editor that can blur (gaussian) images
+ *
+ * license: GPL v3
  */
 
 #include <QApplication>

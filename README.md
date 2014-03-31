@@ -1,4 +1,3 @@
-JpegFilter
-==========
+# Gaussian blur editor
 
-Реализация алгоритма обработки изображений с помощью Гаусова фильтра размытия
+Simple photo editor written on qt 4.8.5 that can only blur images.
