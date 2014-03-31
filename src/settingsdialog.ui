@@ -6,16 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>311</width>
-    <height>150</height>
+    <width>400</width>
+    <height>157</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Настройки</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="res/res.qrc">
-    <normaloff>:/Settings_32x32.png</normaloff>:/Settings_32x32.png</iconset>
+   <iconset theme="preferences-desktop-wallpaper"/>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="4" column="0">
@@ -91,9 +93,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="res/res.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>button_box_</sender>

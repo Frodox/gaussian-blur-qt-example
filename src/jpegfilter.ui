@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>617</width>
-    <height>351</height>
+    <width>600</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>JpegFilter</string>
+   <string>Размытие по гаусу он-лайн</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="sizePolicy">
@@ -21,8 +21,8 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_before_">
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="label_text">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -30,32 +30,22 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>До обработки:</string>
+       <string>Выберите изображение</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       <set>Qt::AlignHCenter|Qt::AlignTop</set>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="label_after_">
-      <property name="text">
-       <string>После обработки:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_input_">
+    <item row="2" column="1">
+     <widget class="QLabel" name="label_output_">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QLabel" name="label_output_">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_input_">
       <property name="text">
        <string/>
       </property>
@@ -68,7 +58,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>617</width>
+     <width>600</width>
      <height>25</height>
     </rect>
    </property>
@@ -92,7 +82,6 @@
    <addaction name="menu_"/>
    <addaction name="menu_edit"/>
   </widget>
-  <widget class="QStatusBar" name="status_bar_"/>
   <action name="action_open">
    <property name="icon">
     <iconset theme="folder-open"/>
@@ -137,10 +126,10 @@
     <iconset theme="preferences-desktop-wallpaper"/>
    </property>
    <property name="text">
-    <string>Настройки</string>
+    <string>Настройки размытия</string>
    </property>
    <property name="toolTip">
-    <string>Настройки размытия</string>
+    <string>Параметры...</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>

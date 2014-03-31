@@ -7,9 +7,10 @@ JpegFilter::JpegFilter(QWidget *parent) :
         ui_ (new Ui::JpegFilter)
 {
     ui_->setupUi(this);
-    radius_ = 3;
-    diviation_ = 1.000;
+    radius_ = 3; // default value
+    diviation_ = 1.0; // default value
     blur_parametres_is_set_ = false;
+    have_img_to_save = false;
 }
 
 
@@ -18,6 +19,8 @@ JpegFilter::~JpegFilter()
     delete ui_;
 }
 
+
+/********************* F U N C T I O N S ***************************************/
 
 void JpegFilter::SetFileNameOnTitle(const QString &file_name)
 {
@@ -28,7 +31,11 @@ void JpegFilter::SetFileNameOnTitle(const QString &file_name)
 void JpegFilter::SetInputImage(const QString &file_name)
 {
     input_image_.load(file_name);
-    QImage image  = input_image_.scaled(input_image_.size() / 1.5);
+
+    // image shouldn't be bigger then 700 px by any edge (I just want it)
+    QSize scaled_size = this->scale_size_if_lesser(input_image_.size(), 700);
+
+    QImage image  = input_image_.scaled(scaled_size, Qt::KeepAspectRatio);
     ui_->label_input_->setPixmap(QPixmap::fromImage(image));
 }
 
@@ -36,12 +43,11 @@ void JpegFilter::SetInputImage(const QString &file_name)
 void JpegFilter::UpdateButtons()
 {
     bool input_is_loaded = ui_ -> label_input_ -> pixmap() -> isNull();
-    bool output_is_set = ui_ -> label_output_ -> pixmap();
     if (false == input_is_loaded) {
         ui_ -> action_blur_image -> setEnabled(true);
     }
-    ui_ -> action_save    -> setEnabled(output_is_set);
-    ui_ -> action_save_as -> setEnabled(output_is_set);
+    ui_ -> action_save    -> setEnabled(have_img_to_save);
+    ui_ -> action_save_as -> setEnabled(have_img_to_save);
 }
 
 
@@ -61,26 +67,44 @@ bool JpegFilter::SaveAs()
 
 bool JpegFilter::Save(const QString &file_name)
 {
-    output_image_.save(file_name, "jpeg");
-    ui_ -> status_bar_ -> showMessage(QString("Сохранено в %1").arg(file_name), 10);
+    output_image_.save(file_name, "jpg");
     return true;
 }
 
 
+
+QSize JpegFilter::scale_size_if_lesser(QSize size, int max_size)
+{
+    int scale_factor = 1;
+    QSize scaled_size = size / max_size; // int - without float part
+
+    if (scaled_size.width() >= 1 && scaled_size.height() >= 1) {
+        scale_factor = qMax(scaled_size.height(), scaled_size.width());
+    }
+
+    size.scale(size / scale_factor, Qt::KeepAspectRatio);
+    return size;
+}
+
+/********************* T R I G G E R S ***************************************/
+
 void JpegFilter::on_action_open_triggered()
 {
-    QString file_name = QFileDialog::getOpenFileName(this,
-                                                     tr("Открыть изображение"),
-                                                     QDir::currentPath(),
-                                                     tr("Изображения (*.jpg *.jpeg *.jpe)")
-                                                     );
-    if (true == file_name.isEmpty()) {
+    QString file_path = QFileDialog::getOpenFileName(
+                                    this,
+                                    tr("Открыть изображение"),
+                                    QDir::currentPath(),
+                                    tr("Изображения (*.jpg *.jpeg *.jpe *.png)")
+                                    );
+    if (true == file_path.isEmpty()) {
         return;
     }
-    else {
-        SetFileNameOnTitle(file_name);
-        SetInputImage(file_name);
-        ui_ -> label_output_ -> clear();
+    else
+    {
+        SetFileNameOnTitle(file_path);
+        SetInputImage(file_path);
+        ui_ -> label_text ->setText(tr("До обработки:"));
+        this->blur_parametres_is_set_ = false;
         UpdateButtons();
     }
 }
@@ -91,13 +115,13 @@ void JpegFilter::on_action_save_triggered()
     QString current_path = windowTitle();
     QString dir = QFileInfo(current_path).dir().path() + "/";
     QString suffix = QFileInfo(current_path).completeSuffix();
-    Save(dir + "output." + suffix);
+    this->Save(dir + tr("output.") + suffix);
 }
 
 
 void JpegFilter::on_action_save_as_triggered()
 {
-    SaveAs();
+    this->SaveAs();
 }
 
 
@@ -109,9 +133,9 @@ void JpegFilter::on_action_settings_triggered()
     settings_dialog.SetDiviation(diviation_);
     settings_dialog.exec();
 
-    radius_ = settings_dialog.GetBlurRadius();
-    diviation_ = settings_dialog.GetDiviation();
-    blur_parametres_is_set_ = true;
+    this->radius_ = settings_dialog.GetBlurRadius();
+    this->diviation_ = settings_dialog.GetDiviation();
+    this->blur_parametres_is_set_ = true;
 }
 
 
@@ -119,18 +143,23 @@ void JpegFilter::on_action_blur_image_triggered()
 {
     if (false == blur_parametres_is_set_)
     {
-        SettingsDialog settings_dialog;
-        settings_dialog.exec();
-        diviation_ = settings_dialog.GetDiviation();
-        radius_ = settings_dialog.GetBlurRadius();
+        this->on_action_settings_triggered();
     }
 
+    // SHOW WARNING
+
     GaussianBlur blur(radius_, diviation_);
-    ui_ -> status_bar_ -> showMessage("Подождите, изображение обрабатывается...");
     output_image_ = blur.ApplyGaussianFilterToImage(input_image_);
-    ui_ -> status_bar_ -> clearMessage();
-    QImage output = output_image_.scaled(output_image_.size() / 1.5);
-    ui_ -> label_output_ -> setPixmap(QPixmap::fromImage(output));
+
+    QSize scaled_size = this->scale_size_if_lesser(input_image_.size(), 700);
+    QImage output = output_image_.scaled(scaled_size, Qt::KeepAspectRatio);
+
+    // SHOW SUCCESS
+
+    ui_ -> label_text ->setText(tr("После обработки:"));
+    ui_ -> label_input_ -> setPixmap(QPixmap::fromImage(output));
+    have_img_to_save = true;
+
     UpdateButtons();
 }
 

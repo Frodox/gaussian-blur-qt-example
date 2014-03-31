@@ -8,7 +8,7 @@
 #include "gaussianblur.h"
 
 namespace Ui {
-class JpegFilter;
+    class JpegFilter;
 }
 
 class JpegFilter : public QMainWindow
@@ -22,19 +22,19 @@ private:
     int radius_;
     double diviation_;
     bool blur_parametres_is_set_;
+    bool have_img_to_save;
 
     Ui::JpegFilter *ui_;
 
-public:
-    explicit JpegFilter(QWidget *parent = 0);
-    ~JpegFilter();
 
-private:
+    /* F u n c s */
+
     void SetFileNameOnTitle(const QString &file_name);
     void SetInputImage(const QString &file_name);
     void UpdateButtons();
     bool Save(const QString &file_name);
     bool SaveAs();
+    QSize scale_size_if_lesser(QSize size, int max_size);
 
 private slots:
     void on_action_open_triggered();
@@ -42,6 +42,10 @@ private slots:
     void on_action_save_as_triggered();
     void on_action_settings_triggered();
     void on_action_blur_image_triggered();
+
+public:
+    explicit JpegFilter(QWidget *parent = 0);
+    ~JpegFilter();
 };
 
 #endif // JPEGFILTER_H
